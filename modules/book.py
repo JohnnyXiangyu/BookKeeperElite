@@ -1,18 +1,64 @@
 import sqlite3
+import os
+try:
+    from utils.configure import updateTuesday
+except ModuleNotFoundError:
+    from modules.utils.configure import updateTuesday
 
-def addLib(lib_name):
+# some terminologies
+# book: collection of a sort of data
+# page: an item in book
+
+
+def mkLib(lib_name):
     '''
     Add a sqlite file in configured path
+    Should not be explictly called
+    Should never be called
     '''
+    filename = os.getcwd() + '\\books\\' + lib_name
+    conn = None
+    try:
+        conn = sqlite3.connect(filename)
+        print(sqlite3.version)
+    except sqlite3.Error as e:
+        print(e)
+    finally:
+        if conn:
+            conn.close()
     return 0
 
-def mkBook(book_name, schema):
+
+def mkBook(lib_name, book_name, schema, comment="no comment"):
     '''
     A function used to create a new table in database, with name and schema defined in the args
-    Book name should be also stored in a configure file
+    Book name and structure should be also stored in a configuration file
+    Insertion time is mandatory field
     '''
-    command = 'CREATE TABLE [IF NOT EXISTS] [schema_name].table_name (column_1 data_type PRIMARY KEY,column_2 data_type NOT NULL,column_3 data_type DEFAULT 0,table_constraints) [WITHOUT ROWID];'
-    return 0
+    # generate a sqlite command
+    command = 'CREATE TABLE ' + \
+        book_name + '(INSERTION_TIME INT PRIMARY KEY NOT NULL'
+    items = []
+    for key, value in schema.items():
+        items.append(key)
+        command += ', ' + key + ' ' + value
+    command += ');'
+
+    # TODO: commit the command
+    filename = os.getcwd() + '\\books\\' + lib_name
+    conn = sqlite3.connect(filename)
+    cur = conn.cursor()
+    cur.execute(command)
+    conn.close()
+
+    # create a record in tuesday configuration
+    newbook = {
+        "name": book_name,
+        "description": comment,
+        "items": items
+    }
+    updateTuesday(newbook)
+
 
 def addPage(book_name, contents):
     '''
@@ -23,12 +69,15 @@ def addPage(book_name, contents):
 
 
 # DANGER ZONE
+
+
 def rmPage(page_id):
     '''
     Remove a page
     Arg should be dict containing enough data to identify a page
     '''
     return 0
+
 
 def rmBook():
     '''
