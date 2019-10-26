@@ -2,13 +2,21 @@
     "#DESCRIPTION": "This file contains names and structures of books in use. It's a highly dynamic library, and many function can modify its content.",
     "books": {
         "dummy": {
-            "name": "dummy",
-            "description": "dummy book structure used in dev",
+            "description": "dummy book structure used in dev, not in db file",
             "items": [
                 "item1",
                 "item2",
                 "item3"
-            ]
+            ],
+            "name": "dummy"
+        },
+        "dummy2": {
+            "name": "dummy2",
+            "description": "this is a dummy book in db",
+            "items": {
+                "dummyline": "INT",
+                "dummycircle": "REAL"
+            }
         }
     }
 }

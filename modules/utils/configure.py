@@ -26,9 +26,9 @@ def reloadMonday():
     monday_config = json.load(monday_file)
 
 
-def getTuesday():
+def getTuesdayNames():
     '''
-    Get data from Tuesday configuration
+    Get book names from Tuesday configuration
     '''
     # TODO: start
     return 0
@@ -47,7 +47,7 @@ def updateTuesday(new_book):
     tuesday_dict["books"].update(new_book)
 
     # update the file
-    tuesday_file = open(os.getcwd() + "\\configs\\tuesday.json")
-    json.dump(tuesday_dict, tuesday_file)
+    tuesday_file = open(os.getcwd() + "\\configs\\tuesday.json", 'w')
+    json.dump(tuesday_dict, tuesday_file, indent=4)
 
     return 0

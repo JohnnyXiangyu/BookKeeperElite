@@ -19,7 +19,6 @@ import modules.book as book
 
 # TODO: implement database
 
-book.mkLib('testbook.db')
 book.mkBook('testbook.db', 'dummy2', {"dummyline": "INT", "dummycircle": "REAL"}, 'this is a dummy book in db')
 
 print('testpass')

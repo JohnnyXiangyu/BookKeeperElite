@@ -36,15 +36,15 @@ def mkBook(lib_name, book_name, schema, comment="no comment"):
     Insertion time is mandatory field
     '''
     # generate a sqlite command
-    command = 'CREATE TABLE ' + \
+    command = 'CREATE TABLE IF NOT EXISTS ' + \
         book_name + '(INSERTION_TIME INT PRIMARY KEY NOT NULL'
-    items = []
+    items = {}
     for key, value in schema.items():
-        items.append(key)
+        items.update({key: value})
         command += ', ' + key + ' ' + value
     command += ');'
 
-    # TODO: commit the command
+    # commit the command
     filename = os.getcwd() + '\\books\\' + lib_name
     conn = sqlite3.connect(filename)
     cur = conn.cursor()
@@ -57,6 +57,7 @@ def mkBook(lib_name, book_name, schema, comment="no comment"):
         "description": comment,
         "items": items
     }
+    newbook = {book_name: newbook}
     updateTuesday(newbook)
 
 
@@ -65,10 +66,12 @@ def addPage(book_name, contents):
     Add the content dict into given book name
     Should have error checking regarding recorded book names
     '''
+    if !(book_name in )
     return 0
 
 
 # DANGER ZONE
+# not implemented
 
 
 def rmPage(page_id):
