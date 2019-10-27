@@ -1,9 +1,10 @@
 import sqlite3
 import os
 try:
-    from utils.configure import updateTuesday
+    import modules.utils.configure as configs
 except ModuleNotFoundError:
-    from modules.utils.configure import updateTuesday
+    import utils.configure as configs
+
 
 # some terminologies
 # book: collection of a sort of data
@@ -14,7 +15,7 @@ def mkLib(lib_name):
     '''
     Add a sqlite file in configured path
     '''
-    filename = os.getcwd() + '\\books\\' + lib_name
+    filename = configs.getMonday('db_location') + lib_name
     conn = None
     try:
         conn = sqlite3.connect(filename)
@@ -37,8 +38,7 @@ def rmLib(lib_name):
 def mkBook(lib_name, book_name, schema, comment="no comment"):
     '''
     A function used to create a new table in database, with name and schema defined in the args
-    Book name and structure should be also stored in a configuration file
-    Insertion time is mandatory field
+    Intersion_time will be prepended to the schema, so don't include it in argument
     '''
     # generate a sqlite command
     command = 'CREATE TABLE IF NOT EXISTS ' + \
@@ -50,20 +50,20 @@ def mkBook(lib_name, book_name, schema, comment="no comment"):
     command += ');'
 
     # commit the command
-    filename = os.getcwd() + '\\books\\' + lib_name
+    filename = configs.getMonday('db_location') + lib_name
     conn = sqlite3.connect(filename)
     cur = conn.cursor()
     cur.execute(command)
-    conn.close()
+    
+    if conn:
+        conn.close()
 
-    # create a record in tuesday configuration
-    newbook = {
-        "name": book_name,
-        "description": comment,
-        "items": items
-    }
-    newbook = {book_name: newbook}
-    updateTuesday(newbook)
+    # debug: show the updated list of tables
+    current_books = configs.getTuesdayNames()
+    debug_message = 'Updated list:'
+    for name in current_books:
+        debug_message += ' ' + name
+    print(debug_message)
 
 
 def rmBook():
@@ -73,14 +73,43 @@ def rmBook():
     return 0
 
 
-def addPage(book_name, contents):
+def mkPage(lib_name='testbook.db', book_name='dummy2', contents = {}):
     '''
     Add the content dict into given book name
+    contents argument should be dict containing key:value pairs, any field not specified will be null
     Should have error checking regarding recorded book names
     '''
-    # TODO: load schema of book
-    # TODO: compare contents' field and schema
-    # TODO: build command
+    # TODO: this function is not debugged
+    
+    # load schema of book
+    schema = configs.getTuesdaySchema(lib_name, book_name)
+
+    # build command
+    command = 'INSERT INTO ' + book_name + ' [('
+    values = []
+    # add field names
+    for field in schema:
+        try:
+            values.append(contents[field])
+            command += field + ', '
+        except KeyError:
+            # if this field is not given, let SQLite set it to null
+            pass
+    command += ')] VALUES ('
+    # add field values
+    for value in values:
+        command += value + ', '
+    command += ');'
+
+    # execute
+    filename = configs.getMonday('db_location') + lib_name
+    conn = sqlite3.connect(filename)
+    cur = conn.cursor()
+    cur.execute(command)
+
+    if conn:
+        conn.close()
+
     return 0
 
 

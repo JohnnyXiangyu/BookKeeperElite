@@ -1,13 +1,17 @@
 import json
 import os
+import sqlite3
+import re
 
 # some terminologies
 # monday: startup configurations
-# tuesday: mata data about database structure
+# tuesday: mata data about database structure, not a file
 
 
+# open and read monday file, and close it
 monday_file = open(os.getcwd() + "\\configs\\monday.json")
 monday_config = json.load(monday_file)
+monday_file.close()
 
 
 def getMonday(config_key):
@@ -24,30 +28,54 @@ def reloadMonday():
     global monday_file, monday_config
     monday_file = open(os.getcwd() + "\\configs\\monday.josn")
     monday_config = json.load(monday_file)
+    monday_file.close()
 
 
-def getTuesdayNames():
+def getTuesdayNames(lib_name='testbook.db'):
     '''
-    Get book names from Tuesday configuration
+    Returns a list of names of tables in the given database
     '''
-    # TODO: start
-    return 0
+    # generate a sqlite command
+    command = "SELECT name FROM sqlite_master WHERE type='table'"
+
+    # commit the command
+    filename = os.getcwd() + '\\books\\' + lib_name
+    conn = sqlite3.connect(filename)
+    cur = conn.cursor()
+    cur.execute(command)
+
+    # construct result list
+    namelist = []
+    for name in cur.fetchall()[0]:
+        namelist.append(name)
+    conn.close()
+    return namelist
 
 
-def updateTuesday(new_book):
-    '''
-    This should be the only interface tuesday.json get modified.
-    It'll read teusday into a dict and update tuesday["books"] section. 
-    Then it'll override the file.
-    '''
-    # process added data
-    tuesday_file = open(os.getcwd() + "\\configs\\tuesday.json")
-    tuesday_dict = json.load(tuesday_file)
-    tuesday_file.close()
-    tuesday_dict["books"].update(new_book)
+# updateTuesday() is removed
 
-    # update the file
-    tuesday_file = open(os.getcwd() + "\\configs\\tuesday.json", 'w')
-    json.dump(tuesday_dict, tuesday_file, indent=4)
 
-    return 0
+def getTuesdaySchema(lib_name='testbook.db', book_name='dummy2'):
+    command = "SELECT sql FROM sqlite_master WHERE type='table'"
+
+    # commit the command
+    filename = os.getcwd() + '\\books\\' + lib_name
+    print(getMonday('db_location') + lib_name)
+    conn = sqlite3.connect(filename)
+    cur = conn.cursor()
+    cur.execute(command)
+    resultlist = cur.fetchall()[0][0]
+    if conn:
+        conn.close()
+
+    # parse result for a list of just column names (I reused the variable name)
+    schema = re.findall(', [^ ]+ ', resultlist)
+    resultlist = []
+    for column in schema:
+        temp_name = ''
+        for char in column:
+            if char != ',' and char != ' ':
+                temp_name += char
+        resultlist.append(temp_name)
+
+    return resultlist

@@ -1,9 +1,10 @@
 # BookKeeperElite
- A local "web" tool to keep track of sorted data and capable of customizable algorithms. Designed for single user application  
+ Localhost application that keeps records of user-specified schema, with htlml GUI.  
 
 # Implementation
- Using OneDrive server to sync SQLite files, therefore implement a private web database. Besides web server, another important feature would be file parsing. For now I'll try to write defination of grammar for this tool into a single json file so user can customize their grammar.  
- This tool is inspired by the need of a dictionary form class note, which can be not efficient in OneNote.  
+ Using OneDrive server to sync SQLite files, therefore implement a private web database.  
+ At bottom level: database toolset, configuration toolset, html templates  
+ Higher level: web.py server, user interface logics  
 
 # Architecture
  User interface: html page hosted by webpy  
@@ -13,6 +14,7 @@
  It would work like a localhost webserver, providing webpage(s) to manipulate and display the content in a local SQL file stored in a user defined location.  
    
  init.py: driver code  
+ Toolsets:  
  modules/book.py: database toolset  
      mkLib(): create a new db file  
      mkBook(): create a new table in given database  
@@ -26,4 +28,5 @@
 
 # Log  
  10/27 organized existing functions and README  
- 
+ 10/27 implemented getTuesdayNames(), tuesday file is removed from file structure  
+ 10/27 implemented getTuesdaySchema() and mkPage(), the later depends on the other * this feature is not tested  

@@ -1,5 +1,6 @@
 import web
 import modules.book as book
+import modules.utils.configure as configs
 
 # TODO: implement server part
 # render = web.template.render('templates/')
@@ -19,6 +20,8 @@ import modules.book as book
 
 # TODO: implement database
 
-book.mkBook('testbook.db', 'dummy2', {"dummyline": "INT", "dummycircle": "REAL"}, 'this is a dummy book in db')
+# book.mkBook('testbook.db', 'dummy2', {"dummyline": "INT", "dummycircle": "REAL"}, 'this is a dummy book in db')
+
+print(configs.getTuesdaySchema())
 
 print('testpass')
