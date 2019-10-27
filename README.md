@@ -25,3 +25,5 @@
      updataTuesday(): modify metadata about database schemas (might be removed since SQLite files contain metadata)  
 
 # Log  
+ 10/27 organized existing functions and README  
+ 

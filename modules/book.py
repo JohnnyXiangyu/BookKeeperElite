@@ -13,8 +13,6 @@ except ModuleNotFoundError:
 def mkLib(lib_name):
     '''
     Add a sqlite file in configured path
-    Should not be explictly called
-    Should never be called
     '''
     filename = os.getcwd() + '\\books\\' + lib_name
     conn = None
@@ -26,6 +24,13 @@ def mkLib(lib_name):
     finally:
         if conn:
             conn.close()
+    return 0
+
+
+def rmLib(lib_name):
+    '''
+    Remove the specified db file.
+    '''
     return 0
 
 
@@ -61,29 +66,27 @@ def mkBook(lib_name, book_name, schema, comment="no comment"):
     updateTuesday(newbook)
 
 
+def rmBook():
+    '''
+    Remove a book
+    '''
+    return 0
+
+
 def addPage(book_name, contents):
     '''
     Add the content dict into given book name
     Should have error checking regarding recorded book names
     '''
-
+    # TODO: load schema of book
+    # TODO: compare contents' field and schema
+    # TODO: build command
     return 0
-
-
-# DANGER ZONE
-# not implemented
 
 
 def rmPage(page_id):
     '''
     Remove a page
     Arg should be dict containing enough data to identify a page
-    '''
-    return 0
-
-
-def rmBook():
-    '''
-    Remove a book
     '''
     return 0
