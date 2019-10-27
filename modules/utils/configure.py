@@ -3,7 +3,7 @@ import os
 
 # some terminologies
 # monday: startup configurations
-# tuesday: data about database structure
+# tuesday: mata data about database structure
 
 
 monday_file = open(os.getcwd() + "\\configs\\monday.json")

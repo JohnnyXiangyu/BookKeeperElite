@@ -66,7 +66,7 @@ def addPage(book_name, contents):
     Add the content dict into given book name
     Should have error checking regarding recorded book names
     '''
-    if !(book_name in )
+
     return 0
 
 
