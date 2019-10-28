@@ -15,7 +15,7 @@
    
  init.py: driver code  
  Toolsets:  
- * modules/book.py: database toolset
+ - modules/book.py: database toolset
      - mkLib(): create a new db file  
      - mkBook(): create a new table in given database  
      - addPage(): add a line of data in database, with specified format  
