@@ -22,10 +22,10 @@
      - rmPage(): remove a line of data, not a UI function  
      - rmBook(): remove a book  
 
- * modules/utils/configure.py: configuration toolset and storage  
-     getMonday(): load startup configurations, including path to db file  
-     reloadMonday(): reload startup configurations, in case future features modify Monday.json in running  
-     updataTuesday(): modify metadata about database schemas (might be removed since SQLite files contain metadata)  
+ - modules/utils/configure.py: configuration toolset and storage  
+    - getMonday(): load startup configurations, including path to db file  
+    - reloadMonday(): reload startup configurations, in case future features modify Monday.json in running  
+    - updataTuesday(): modify metadata about database schemas (might be removed since SQLite files contain metadata)  
 
 # Log  
  10/27 organized existing functions and README  
