@@ -14,6 +14,7 @@
  It would work like a localhost webserver, providing webpage(s) to manipulate and display the content in a local SQL file stored in a user defined location.  
    
  init.py: driver code  
+   
  Toolsets:  
  - modules/book.py: database toolset
      - mkLib(): create a new db file  
