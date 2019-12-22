@@ -1,3 +1,4 @@
 {
-    "db_location": "some-location-to-file"
+    "#DESCRIPTION": "This file contains all configurations the program loads on startup. They should be configured before program deploy, and shouldn't be changed by hand.",
+    "db_location": "c:\\Users\\Superficial Johnny\\Downloads\\_GITHUB\\BookKeeperElite\\"
 }

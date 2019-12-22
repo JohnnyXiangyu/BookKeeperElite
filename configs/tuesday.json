@@ -1,0 +1,22 @@
+{
+    "#DESCRIPTION": "Historical file, please ignore it",
+    "books": {
+        "dummy": {
+            "description": "dummy book structure used in dev, not in db file",
+            "items": [
+                "item1",
+                "item2",
+                "item3"
+            ],
+            "name": "dummy"
+        },
+        "dummy2": {
+            "name": "dummy2",
+            "description": "this is a dummy book in db",
+            "items": {
+                "dummyline": "INT",
+                "dummycircle": "REAL"
+            }
+        }
+    }
+}
